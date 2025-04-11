@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Report Page - WAPS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      color: #ffffff;
+    }
+
+    /* Background styles */
+    #vanta-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Header */
+    header {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 40px;
+    }
+
+    .logo {
+      top: 30px;
+      height: 100px;
+      width: 100px;
+      left: 30px;
+      border-radius: 100px;
+      position: fixed;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    .login:hover {
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 500;
+      text-align: center;
+      flex-grow: 1;
+      color: #ffffff;
+    }
+
+    /* Main container */
+    .report-container {
+      padding: 40px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    /* Dropzones */
+    .dropzones {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .dropzone {
+      background-color: rgba(255, 255, 255, 0.1);
+      width: 180px;
+      height: 200px;
+      border-radius: 16px;
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      position: relative;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .dropzone:hover {
+      background-color: rgba(5, 198, 28, 0.1);
+      cursor: pointer;
+      transform: scale(1.02);
+      border-color: #05c61c;
+    }
+
+    .dropzone.drag-over {
+      border-color: #05c61c;
+      background-color: rgba(5, 198, 28, 0.2);
+    }
+
+    .dropzone.has-file {
+      border-color: #05c61c;
+      background-color: rgba(5, 198, 28, 0.1);
+    }
+
+    .dropzone.has-file .plus {
+      color: #05c61c;
+    }
+
+    .dropzone.has-file p {
+      color: #05c61c;
+    }
+
+    .plus {
+      font-size: 48px;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .dropzone p {
+      font-size: 14px;
+      color: #ffffff;
+    }
+
+    .dropzone span {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Input fields */
+    .autocomplete-container {
+      position: relative;
+      width: 220px;
+      margin: 0 auto;
+    }
+
+    #pincodeInput {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(5, 198, 28, 0.3);
+      font-size: 14px;
+      outline: none;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    #pincodeInput:focus {
+      border-color: #05c61c;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    #pincodeInput::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Textarea */
+    .case-description {
+      padding: 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      height: 120px;
+      border: 1px solid rgba(5, 198, 28, 0.3);
+      resize: none;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #ffffff;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .case-description:focus {
+      border-color: #05c61c;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .case-description::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Suggestions list */
+    .suggestions-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(5, 198, 28, 0.2);
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+      z-index: 1000;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+      border: 1px solid rgba(5, 198, 28, 0.3);
+    }
+
+    .suggestions-list li {
+      padding: 10px 14px;
+      cursor: pointer;
+      color: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .suggestions-list li:hover {
+      background-color: rgba(5, 198, 28, 0.2);
+    }
+
+.bottom-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+}
+
+    /* Submit button */
+    .submit-btn {
+      padding: 12px 28px;
+      background-color: transparent;
+      border: 1px solid #05c61c;
+      border-radius: 28px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #ffffff;
+    }
+
+    .submit-btn:hover {
+      background-color: #05c61c;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(5, 198, 28, 0.4);
+    }
+
+    /* Terms section */
+    .terms {
+      font-size: 14px;
+      color: #ffffff;
+    }
+
+    .termsandcond {
+      margin-left: 30px;
+      font-size: 15px;
+    }
+
+    .termsandcond a {
+      text-decoration: none;
+      color: #05c61c;
+      transition: color 0.3s ease;
+    }
+
+    .termsandcond a:hover {
+      color: #ffffff;
+    }
+
+    /* From Uiverse.io by bociKond */
+    /* Hide the default checkbox */
+    .container input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .container {
+      display: block;
+      position: relative;
+      cursor: pointer;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    /* Create a custom checkbox */
+    .checkmark {
+      --clr: #05c61c;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 1.3em;
+      width: 1.3em;
+      background-color: #ccc;
+      border-radius: 50%;
+      transition: 300ms;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .container input:checked~.checkmark {
+      background-color: var(--clr);
+      border-radius: .5rem;
+      animation: pulse 500ms ease-in-out;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .container input:checked~.checkmark:after {
+      display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .container .checkmark:after {
+      left: 0.45em;
+      top: 0.25em;
+      width: 0.25em;
+      height: 0.5em;
+      border: solid #E0E0E2;
+      border-width: 0 0.15em 0.15em 0;
+      transform: rotate(45deg);
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 #0b6e2c90;
+        rotate: 20deg;
+      }
+
+      50% {
+        rotate: -20deg;
+      }
+
+      75% {
+        box-shadow: 0 0 0 10px #0B6E4F60;
+      }
+
+      100% {
+        box-shadow: 0 0 0 13px #0B6E4F30;
+        rotate: 0;
+      }
+    }
+
+    /* Add these new styles in your <style> section */
+    .select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .organization-select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(5, 198, 28, 0.3);
+      font-size: 14px;
+      outline: none;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #ffffff;
+      transition: all 0.3s ease;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .organization-select:focus {
+      border-color: #05c61c;
+      background-color: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 10px rgba(5, 198, 28, 0.2);
+    }
+
+    .organization-select option {
+      background-color: rgba(0, 0, 0, 0.9);
+      color: #ffffff;
+      padding: 12px;
+    }
+
+    .select-arrow {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid #05c61c;
+      pointer-events: none;
+    }
+
+    .organization-select:focus + .select-arrow {
+      border-top-color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Vanta.js Background -->
+  <div id="vanta-bg"></div>
+
+  <!-- Include THREE.js and Vanta.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+
+  <!-- Initialize Vanta -->
+  <script>
+    VANTA.WAVES({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0xc0c0c,
+      shininess: 20.00,
+      waveHeight: 6.5,
+      waveSpeed: 1.0,
+      zoom: 0.9
+    });
+  </script>
+
+  <header>
+    <a href="user_page.html" class=""><img src="logo.jpg" alt="this is the logo of the project" class="logo"></a>
+    <h1>Report page</h1>
+  </header>
+
+  <main class="report-container">
+    <div class="dropzones">
+      <div class="dropzone" id="photoDrop" data-has-file="false">
+        <div class="plus">+</div>
+        <p><strong>Drop photos here</strong><br><span>Max size 5mb</span></p>
+        <input type="file" accept="image/*" hidden required />
+      </div>
+
+      <div class="dropzone" id="fileDrop" data-has-file="false">
+        <div class="plus">+</div>
+        <p><strong>Drop files here</strong><br><span>Max size 5mb</span></p>
+        <input type="file" hidden required />
+      </div>
+
+      <div class="dropzone" id="videoDrop" data-has-file="false">
+        <div class="plus">+</div>
+        <p><strong>Drop videos here</strong><br><span>Max size 25mb</span></p>
+        <input type="file" accept="video/*" hidden required />
+      </div>
+    </div>
+
+    <div class="autocomplete-container">
+      <div class="select-wrapper">
+        <select id="organizationSelect" class="organization-select">
+          <option value="" disabled selected>Select Organization</option>
+          <option value="Google">Google</option>
+          <option value="Union Bank">Union Bank</option>
+          <option value="Atlassian">Atlassian</option>
+        </select>
+        <div class="select-arrow"></div>
+      </div>
+    </div>
+
+    <textarea class="case-description" placeholder="Write about the case..." required></textarea>
+
+    <div class="bottom-bar">
+      <span class="terms">
+        <label class="container">
+          <input type="checkbox" id="termsCheckbox" disabled />
+          <div class="checkmark"></div>
+        </label>
+        <span class="termsandcond"><a href="terms_cond.html" id="termsLink">Terms & conditions</a></span>
+      </span>
+      <button type="submit" class="submit-btn" id="submitBtn" disabled>Submit</button>
+    </div>
+  </main>
+
+  <script>
+    function setupDropzone(dropzoneId, maxSizeMB) {
+      const dropzone = document.getElementById(dropzoneId);
+      const input = dropzone.querySelector('input');
+
+      dropzone.addEventListener("click", () => input.click());
+
+      dropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropzone.classList.add("drag-over");
+      });
+
+      dropzone.addEventListener("dragleave", () => {
+        dropzone.classList.remove("drag-over");
+      });
+
+      dropzone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropzone.classList.remove("drag-over");
+
+        const file = e.dataTransfer.files[0];
+        if (file) {
+          const sizeMB = file.size / (1024 * 1024);
+          if (sizeMB > maxSizeMB) {
+            alert(`File too large! Max size: ${maxSizeMB} MB`);
+            dropzone.dataset.hasFile = "false";
+            return;
+          }
+
+          // Show file name and size
+          dropzone.querySelector("p").innerHTML = `<strong>${file.name}</strong><br><span>${sizeMB.toFixed(2)} MB</span>`;
+          dropzone.dataset.hasFile = "true";
+          dropzone.classList.add("has-file");
+        }
+      });
+
+      input.addEventListener("change", () => {
+        const file = input.files[0];
+        if (file) {
+          const sizeMB = file.size / (1024 * 1024);
+          if (sizeMB > maxSizeMB) {
+            alert(`File too large! Max size: ${maxSizeMB} MB`);
+            input.value = '';
+            dropzone.dataset.hasFile = "false";
+            return;
+          }
+          dropzone.querySelector("p").innerHTML = `<strong>${file.name}</strong><br><span>${sizeMB.toFixed(2)} MB</span>`;
+          dropzone.dataset.hasFile = "true";
+          dropzone.classList.add("has-file");
+        } else {
+          dropzone.dataset.hasFile = "false";
+          dropzone.classList.remove("has-file");
+        }
+      });
+    }
+
+    // Setup all zones
+    setupDropzone("photoDrop", 5);
+    setupDropzone("fileDrop", 5);
+    setupDropzone("videoDrop", 25);
+
+    // Form validation function
+    function validateForm() {
+      const hasAnyFile = Array.from(document.querySelectorAll('.dropzone')).some(
+        dropzone => dropzone.dataset.hasFile === "true"
+      );
+      
+      const organization = document.getElementById('organizationSelect').value;
+      const description = document.querySelector('.case-description').value;
+      const termsAccepted = document.getElementById('termsCheckbox').checked;
+      
+      const submitBtn = document.getElementById('submitBtn');
+      
+      // Enable submit button only if all conditions are met
+      submitBtn.disabled = !hasAnyFile || !organization || !description.trim() || !termsAccepted;
+    }
+
+    // Add event listeners for form validation
+    document.querySelector('.case-description').addEventListener('input', validateForm);
+    document.getElementById('organizationSelect').addEventListener('change', validateForm);
+    document.getElementById('termsCheckbox').addEventListener('change', validateForm);
+
+    // Handle terms link click
+    document.getElementById('termsLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.open('terms_cond.html', '_blank');
+      // Enable the checkbox after visiting terms page
+      document.getElementById('termsCheckbox').disabled = false;
+    });
+
+    // Form submission handling
+    document.getElementById('submitBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Check if at least one file is uploaded
+      const hasAnyFile = Array.from(document.querySelectorAll('.dropzone')).some(
+        dropzone => dropzone.dataset.hasFile === "true"
+      );
+      
+      if (!hasAnyFile) {
+        alert('Please upload at least one file (photo, document, or video)');
+        return;
+      }
+
+      // Check if description is filled
+      const description = document.querySelector('.case-description').value;
+      if (!description.trim()) {
+        alert('Please provide a case description');
+        return;
+      }
+
+      // Check if organization is selected
+      const organization = document.getElementById('organizationSelect').value;
+      if (!organization) {
+        alert('Please select an organization');
+        return;
+      }
+
+      // Check if terms are accepted
+      const termsAccepted = document.getElementById('termsCheckbox').checked;
+      if (!termsAccepted) {
+        alert('Please accept the terms and conditions');
+        return;
+      }
+
+      // If all validations pass, redirect to user page
+      window.location.href = 'user_page.html';
+    });
+
+    // Initial validation
+    validateForm();
+  </script>
+</body>
+
+</html>

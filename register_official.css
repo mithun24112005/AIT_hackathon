@@ -1,0 +1,173 @@
+body{
+    height: 540px;
+    width: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', Helvetica, sans-serif;
+}
+
+
+
+.form {
+    background-color: #fff;
+    display: block;
+    padding: 1rem;
+    max-width: 400px;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.265), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: #05c61c;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .input-container {
+    position: relative;
+  }
+  
+  .input-container input, .form button {
+    outline: none;
+    border: 1px solid #e5e7eb;
+    margin: 8px 0;
+  }
+  
+  .input-container input {
+    background-color: #fff;
+    padding: 1rem;
+    padding-right: 3rem;
+    font-size: 0.875rem;
+    color: #05c61c;
+    line-height: 1.25rem;
+    width: 300px;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .signup-link {
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    text-align: center;
+  }
+  
+  .signup-link a {
+    text-decoration: underline;
+  }
+
+.register {
+  cursor: pointer;
+  position: relative;
+  padding: 10px 24px;
+  margin-left: 50px;
+  font-size: 18px;
+  color: #05c61c;
+  border: 2px solid #05c61c;
+  border-radius: 34px;
+  background-color: transparent;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  overflow: hidden;
+}
+
+.register::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: #05c61c;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.register:hover::before {
+  scale: 3;
+}
+
+.register:hover {
+  color: #212121;
+  scale: 1.1;
+  box-shadow: 0 0px 20px #05c61c;
+}
+
+.register:active {
+  scale: 1;
+}
+
+.register_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox p{
+    display: flex;
+    position: absolute;
+    margin-left: 50px;
+}
+
+.age_checkbox {
+    appearance: none;
+    width: 22px;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    border: 2px solid black;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    margin-top: 14px;
+  }
+  
+  .age_checkbox::before {
+    font-family: "Quicksand", sans-serif;
+    position: absolute;
+    bottom: -4px;
+    left: 1px;
+    content: "✔";
+    font-size: 27px;
+    color: #05c61c;
+    transform: scale(0);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .age_checkbox:checked::before {
+    animation: zoom 0.5s ease-in-out;
+    transform: scale(1);
+  }
+  
+  @keyframes zoom {
+    0% {
+      transform: scale(0);
+    }
+  
+    20% {
+      transform: scale(1.5);
+    }
+  
+    40% {
+      transform: scale(0.5);
+    }
+  
+    50% {
+      transform: scale(1);
+    }
+  
+    70% {
+      transform: scale(1.2);
+    }
+  
+    90% {
+      transform: scale(0.8);
+    }
+  
+    100% {
+      transform: scale(1);
+    }
+  }

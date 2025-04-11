@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAPS - Corruption Free Nation</title>
+  <link rel="stylesheet" href="user_page.css" />
+  <link rel="stylesheet" href="chat_bot.css" />
+  <style>
+    html,
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #vanta-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="back">
+    <!-- background -->
+    <div id="vanta-bg"></div>
+
+    <!-- Include THREE.js and Vanta.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+
+    <!-- Initialize Vanta with custom values -->
+    <script>
+      VANTA.WAVES({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0xc0c0c,        // Light purple-like shade
+        shininess: 20.00,
+        waveHeight: 6.5,
+        waveSpeed: 1.0,
+        zoom: 0.9
+      });
+    </script>
+
+    <!-- background finishes here  -->
+
+    <header>
+      <a href="user-hero.html" class=""><img src="logo.jpg" alt="this is the logo of the project" class="logo"></a>
+      <nav>
+        <a href="#report-case">Report</a>
+        <a href="#organization_list">Organization List</a>
+        <a href="#help-section">Help</a>
+      </nav>
+
+    </header>
+
+    <section class="hero">
+      <h1>Corruption Free <span class="green">Organization</span></h1>
+      <h2 class="green">WAPS</h2>
+      <p>Hello Whistleblower, case your file here anonymously and we'll look after into it. You'll be getting free
+        crypto
+        rewards for complaining truth evidence, which are feasible for use.</p>
+    </section>
+
+
+    <section class="report-case" id="report-case">
+      <h3>Report a Case</h3>
+      <p class="warning">
+      <h5 style="color:#fff">Warning:</h5> The reporter should be aged<b style="color:red"> 18 and above</b>. Make sure to report proper
+      evidence.</p>
+      <a href="register.html"><button class="report-btn">Report</button></a>
+    </section>
+
+    <section class="organization_list" id="organization_list">
+      <h3>Organization List</h3>
+      <p>Here is the list of organizations that you can report to.</p>
+      <div class="organization-list">
+        <div class="organization">
+          <img src="google.jpg" alt="Organization 1">
+          <h4>Google</h4>
+        </div>
+        <div class="organization">
+          <img src="union_bank.jpg" alt="Organization 2">
+          <h4>Union Bank</h4>
+        </div>
+        <div class="organization">
+          <img src="atlassian.jpg" alt="Organization 3">
+          <h4>Atlassian</h4>
+        </div>
+      </div>
+    </section>
+
+    <footer class="help-section" id="help-section">
+      <div class="contact-info">
+        <h3>Help</h3>
+        <p><strong>contact:</strong> 101-202-3034</p>
+        <p><strong>email:</strong> abc@gmail.com</p>
+      </div>
+      <div class="links">
+        <p><strong>useful links:</strong></p>
+        <a href="#">cybercrime.gov.in</a>
+        <a href="#">kowshik.in</a>
+        <a href="#">sumanth.in</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Chatbot Integration -->
+  <label for="chat-toggle" class="chat-toggle">💬 Chat</label>
+  <input type="checkbox" id="chat-toggle" />
+
+  <div class="chatbox">
+    <div class="chat-header">Ask WAPS ✨</div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="message bot">Hi! I'm WAPS Assistant. Ask me anything 🤖</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <!-- Chatbot JavaScript -->
+  <script>
+    async function sendMessage() {
+      const input = document.getElementById("user-input");
+      const message = input.value.trim();
+      if (!message) return;
+
+      // Display user message
+      const chatMessages = document.getElementById("chat-messages");
+      const userMessage = document.createElement("div");
+      userMessage.className = "message user";
+      userMessage.innerText = message;
+      chatMessages.appendChild(userMessage);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      input.value = ""; // Clear input
+
+      try {
+        const res = await fetch("http://127.0.0.1:5000/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+        const botMessage = document.createElement("div");
+        botMessage.className = "message bot";
+        botMessage.innerText = data.response || "Sorry, I couldn't understand that.";
+        chatMessages.appendChild(botMessage);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      } catch (err) {
+        const errorMessage = document.createElement("div");
+        errorMessage.className = "message bot";
+        errorMessage.innerText = "⚠️ Error: Could not connect to the server.";
+        chatMessages.appendChild(errorMessage);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        console.error(err);
+      }
+    }
+
+    // Optional: send message on Enter key
+    document.getElementById("user-input").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>

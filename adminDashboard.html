@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #vanta-bg {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 2rem;
+    height: 84px;
+    backdrop-filter: blur(8px);
+  }
+  
+  .logo {
+    text-decoration: none;
+  }
+
+  .logo_img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: white;
+  }
+  
+  .profile-icon {
+    font-size: 1.5rem;
+    color: white;
+  }
+  
+  .dashboard {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: white;
+  }
+
+  #Organization {
+    margin-right: 1100px;
+  }
+  
+  .card-content {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .content-box {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .content-box:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .content-box.large {
+    flex: 2;
+    height: 150px;
+  }
+  
+  .content-box.small {
+    flex: 1;
+    height: 150px;
+  }
+  
+  .solve-btn {
+    align-self: flex-end;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #00cc00;
+    color: white;
+    cursor: pointer;
+  }
+
+  .solve-btn:hover {
+    opacity: 0.9;
+  }
+  
+    </style>
+</head>
+<body>
+  <!-- Vanta Background -->
+  <div id="vanta-bg"></div>
+
+  <header class="header">
+    <a href="#" class="logo"><img src="logo.jpg" alt="Logo" class="logo_img"></a>
+    <h1 class="title">Admin Dashboard</h1>
+    <div class="profile-icon">👤</div>
+  </header>
+
+  <main class="dashboard">
+    <div class="card">
+      <div class="card-header">
+        <span><strong id="Id">ID :</strong></span>
+        <span><strong id="Organization">Organization :</strong></span>
+      </div>
+      <div class="card-content">
+        <div class="content-box large"></div>
+        <div class="content-box small"></div>
+      </div>
+      <button class="solve-btn">Mark as Solved</button>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span><strong id="Id">ID :</strong></span>
+        <span><strong id="Organization">Organization :</strong></span>
+      </div>
+      <div class="card-content">
+        <div class="content-box large"></div>
+        <div class="content-box small"></div>
+      </div>
+      <button class="solve-btn">Mark as Solved</button>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+  <script>
+    VANTA.WAVES({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0x101010,
+      shininess: 41.00,
+      waveHeight: 6.5,
+      waveSpeed: 1.0,
+      zoom: 0.9
+    });
+  </script>
+</body>
+</html>

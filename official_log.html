@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        font-family: sans-serif;
+        scroll-behavior: smooth;
+        position: relative;
+      }
+
+      #vanta-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .form-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        padding: 0 0;
+      }
+
+      .logo {
+        top: 30px;
+        height: 100px;
+        width: 100px;
+        left: 30px;
+        border-radius: 100px;
+        position: fixed;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        z-index: 10;
+      }
+
+      .form {
+        background-color: transparent;
+        border: 2px solid rgba(225, 225, 225, 0.075);
+        box-shadow: 0 0 10px rgba(147, 147, 147, 0.277);
+        backdrop-filter: blur(10px);
+        display: block;
+        color: #fff;
+        padding: 2rem;
+        max-width: 350px;
+        border-radius: 0.52rem;
+      }
+
+      .form-title {
+        font-family: "Arial", sans-serif;
+        font-size: 1.9rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+        text-align: center;
+        color: #ffffff;
+      }
+
+      .input-container {
+        position: relative;
+      }
+
+      .input-container input,
+      .form button {
+        outline: none;
+        border: 1px solid #e5e7eb;
+        margin: 8px 0;
+        color: #05c61c;
+      }
+
+      .input-container input {
+        background-color: #fff;
+        padding: 1rem;
+        padding-right: 3rem;
+        font-size: 0.9rem;
+        line-height: 1.25rem;
+        width: 300px;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.265);
+      }
+
+      .Register {
+        cursor: pointer;
+        position: relative;
+        padding: 10px 28px;
+        font-size: 18px;
+        color: #05c61c;
+        border: 2px solid #05c61c;
+        border-radius: 34px;
+        background-color: transparent;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        overflow: hidden;
+      }
+
+      .Register a {
+        text-decoration: none;
+        color: #ffffff;
+      }
+
+      .Register a:hover {
+        color: #fff;
+      }
+
+      .reg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .Register::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 50px;
+        height: 50px;
+        border-radius: inherit;
+        scale: 0;
+        z-index: -1;
+        background-color: #05c61c;
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .Register:hover::before {
+        scale: 3;
+      }
+
+      .Register:hover {
+        color: #000000;
+        scale: 1.1;
+        box-shadow: 0 0px 20px #05c61c;
+      }
+
+      .Register:active {
+        scale: 1;
+      }
+
+      .Register:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        border-color: #666;
+        color: #666;
+      }
+
+      .Register:disabled:hover::before {
+        scale: 0;
+      }
+
+      .Register:disabled:hover {
+        box-shadow: none;
+        scale: 1;
+      }
+
+      .input-error {
+        border-color: #ff4444 !important;
+      }
+
+      #login_butt{
+        text-decoration: none;
+      }
+
+      .Waps {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 50px;
+        letter-spacing: 20px;
+      }
+
+      .green {
+        color: #00c400;
+        margin-top: 20px;
+        margin-bottom: 0px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Animated Background -->
+    <div id="vanta-bg"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+    <script>
+      VANTA.WAVES({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0xc0c0c,
+        shininess: 20.0,
+        waveHeight: 6.5,
+        waveSpeed: 1.0,
+        zoom: 0.9,
+      });
+    </script>
+
+    <!-- Logo -->
+    <a href="user-hero.html">
+      <img src="logo.jpg" alt="this is the logo of the project" class="logo" />
+    </a>
+    <div class="Waps">
+      <h2 class="green">WAPS</h2>
+    </div>
+
+    <!-- Form -->
+    <div class="form-wrapper">
+        <form class="form" id="loginForm" onsubmit="return handleSubmit(event)">
+          <p class="form-title">Login</p>
+          <div class="input-container">
+            <input 
+              type="text" 
+              placeholder="Enter User-ID" 
+              id="userId"
+              required 
+              oninput="validateForm()"
+            />
+          </div>
+          <div class="input-container">
+            <input 
+              type="password" 
+              placeholder="Enter password" 
+              id="password"
+              required 
+              oninput="validateForm()"
+            />
+          </div>
+          <div class="reg">
+            <button class="Register" id="loginButton" type="submit" disabled>
+              Login
+            </button>
+          </div>
+        </form>
+        <script>
+            function validateForm() {
+              const userId = document.getElementById('userId').value;
+              const password = document.getElementById('password').value;
+              const loginButton = document.getElementById('loginButton');
+              
+              // Enable button only if both fields have values
+              loginButton.disabled = !userId || !password;
+            }
+      
+            function handleSubmit(event) {
+              event.preventDefault();
+              const userId = document.getElementById('userId').value;
+              const password = document.getElementById('password').value;
+              
+              if (userId && password) {
+                // Changed the redirect URL from user-hero.html to report_com.html
+                window.location.href = 'adminDashboard.html';
+              }
+              return false;
+            }
+      
+            // Initial validation on page load
+            validateForm();
+          </script>
+  </body>
+</html>

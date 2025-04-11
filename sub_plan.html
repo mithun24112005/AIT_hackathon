@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subscription Plans</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #111;
+      color: #fff;
+      overflow: hidden; /* Prevent scrolling */
+    }
+
+    #vanta-bg {
+      width: 100%;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .pricing-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 3rem 1rem;
+      position: relative; /* Ensure content is above the background */
+      z-index: 1;
+    }
+
+    .plan {
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      padding: 2rem;
+      width: 300px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s;
+    }
+
+    .plan:hover {
+      transform: translateY(-10px);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .price {
+      font-size: 2rem;
+      margin: 0.5rem 0;
+      color: #fff;
+    }
+
+    .price span {
+      font-size: 1rem;
+      color: #bbb;
+    }
+
+    .billing {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .upgrade-btn {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .professional-btn {
+      background-color: #a66cff;
+      color: #fff;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      line-height: 1.6;
+    }
+
+    ul li {
+      list-style: none;
+      position: relative;
+      padding-left: 1.2rem;
+      color: #ccc;
+    }
+
+    ul li::before {
+      content: '✔';
+      position: absolute;
+      left: 0;
+      color: #a66cff;
+    }
+
+    .upgrade-btn.professional-btn {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .upgrade-btn.professional-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-20deg);
+      z-index: 2;
+    }
+
+    .upgrade-btn.professional-btn:hover::before {
+      animation: shimmer 0.9s ease-in-out;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -75%;
+      }
+      100% {
+        left: 125%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Vanta Background -->
+  <div id="vanta-bg"></div>
+
+  <section class="pricing-section">
+    <div class="plan professional">
+      <h2>Subscribe Plan</h2>
+      <p class="price">$1500 <span>/ year</span></p>
+      <p class="billing">Billed annually</p>
+      <button class="upgrade-btn professional-btn">Upgrade</button>
+      <ul>
+        <li> View all complaints</li>
+        <li> All case details will be stored securely</li>
+        <li> Green tick for your company logo</li>
+        <li> You can solve your cases privately</li>
+        <li> Trustworthy</li>
+        <li> Easy to use</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+  <script>
+    VANTA.WAVES({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.0,
+      minWidth: 200.0,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0x101010,
+      shininess: 41.0,
+      waveHeight: 6.5,
+      waveSpeed: 1.0,
+      zoom: 0.9,
+    });
+  </script>
+</body>
+</html>
