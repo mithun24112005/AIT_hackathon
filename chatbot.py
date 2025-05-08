@@ -1,6 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import google.generativeai as genai
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+GENAI_API_KEY=os.getenv("API_KEY")
 
 app = Flask(__name__)
 
@@ -8,7 +14,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/chat": {"origins": "*"}}, supports_credentials=True)
 
 # Configure Gemini API Key
-GENAI_API_KEY = "AIzaSyDSKXQV3Xye-m9Wucf24y_gQk-C9iDwpK4"
+# GENAI_API_KEY = "AIzaSyDSKXQV3Xye-m9Wucf24y_gQk-C9iDwpK4"
 genai.configure(api_key=GENAI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
